@@ -7,12 +7,14 @@ const app = express()
 dotenv.config()
 
 const DB_URI = process.env.DB_URI
+const PORT = process.env.PORT || 3000;
+const SECRET = process.env.SECRET
 
-configure(app, DB_URI);
+configure(app, DB_URI, SECRET);
 configureRoutes(app);
 const server = configureWs(app);
 
-const PORT = process.env.PORT || 3000;
+
 
 server.listen(PORT, () => {
     console.log(`OLT web server running on port ${PORT}`);

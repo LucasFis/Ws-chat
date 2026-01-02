@@ -4,16 +4,20 @@ import express from "express";
 import {connectToDB} from "./db.js";
 import {WebSocket, WebSocketServer} from "ws";
 import http from "http"
+import {UsuarioRepositorio} from "../repositorys/usuarioRepositorio.js";
+import {ChatRepositorio} from "../repositorys/chatRepositorio.js";
+import {UsuarioController} from "../controllers/usuarioController.js";
+import {ChatController} from "../controllers/chatController.js";
 
-const configure = (app, DB_URI) => {
+const configure = (app, DB_URI, SECRET) => {
     app.use(cors([]))
     app.use(
         session({
-            secret: "mi_clave_secreta", // clave para firmar la sesión
+            secret: SECRET, // clave para firmar la sesión
             resave: false,              // no guardar si no cambia
             saveUninitialized: false,   // no crear sesión vacía
             cookie: {
-                maxAge: 1000 * 60 * 60    // 1 hora
+                maxAge: 1000 * 60 * 60
             }
         })
     );
@@ -23,10 +27,9 @@ const configure = (app, DB_URI) => {
 }
 
 const configureRoutes = (app) =>{
-    app.post("/login", (req, res) => {
-        const name = req.body.name;
-        //req.session.user = buscarPorNombre(name)
-    })
+    const {usuarioController, chatController} = prepareContext()
+
+    app.post("/login", usuarioController.findByCredentials.bind(usuarioController))
 }
 
 const configureWs = (app) => {
@@ -56,6 +59,15 @@ const configureWs = (app) => {
     });
 
     return server;
+}
+
+const prepareContext = () => {
+    const usuarioRepo = new UsuarioRepositorio()
+    const chatRepo = new ChatRepositorio()
+    const usuarioController = new UsuarioController(usuarioRepo)
+    const chatController = new ChatController(chatRepo)
+
+    return {usuarioController, chatController}
 }
 
 export {configure, configureRoutes, configureWs};

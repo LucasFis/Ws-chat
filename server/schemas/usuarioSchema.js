@@ -14,14 +14,12 @@ const usuarioSchema = new mongoose.Schema({
     timestamps: true
 });
 
-usuarioSchema.pre(/^find/, function (next) {
+usuarioSchema.pre(/^find/, function () {
     this.populate("chats");
-    next();
 })
 
-usuarioSchema.post('save', async function(doc, next) {
-    await doc.populate('chats');
-    next();
+usuarioSchema.post('save', function(doc) {
+    return doc.populate('chats');
 });
 
 usuarioSchema.loadClass(Usuario)

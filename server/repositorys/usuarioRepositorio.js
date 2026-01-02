@@ -12,6 +12,15 @@ export class UsuarioRepositorio {
 
         return usuarioDeDB(userGuardado)
     }
+
+    async findByCredentials(nombre, contrasenia) {
+        //codificar contrasenia
+        const result = await this.model.findOne({nombre: nombre, contrasenia: contrasenia})
+
+        if(!result) console.log("No results \n")
+
+        return usuarioDeDB(result)
+    }
 }
 
 export function usuarioDeDB(user){
