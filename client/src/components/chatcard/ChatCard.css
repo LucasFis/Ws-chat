@@ -1,0 +1,27 @@
+.chat-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: black solid 2px;
+    width: 40%;
+    max-width: 400px;
+    padding:20px;
+    border-radius: 10px;
+    margin: 0.5rem;
+}
+
+.chat-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.chat-card-container h3 {
+    display: inline;
+}
+
+.chat-option {
+    margin: 8px;
+}

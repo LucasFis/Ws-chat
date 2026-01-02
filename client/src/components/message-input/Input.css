@@ -1,0 +1,26 @@
+.input-container {
+    padding: 16px 16px;
+    background-color: #d8d820;
+}
+
+.text-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+}
+
+.text-input-container input {
+    height: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.submit {
+    text-align: center;
+}

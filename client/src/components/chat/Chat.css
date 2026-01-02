@@ -1,0 +1,25 @@
+.chat-body{
+    margin: 1rem;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height:80vh;
+}
+
+.chat-container{
+    border: 4px solid black;
+    height: 24rem;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.volver{
+    align-self: flex-start;
+}
+
+.input {
+    margin-top: auto;
+}
