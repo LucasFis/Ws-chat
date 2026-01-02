@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import Layout from "./components/layout/Layout";
 import Chat from "./components/chat/Chat.jsx";
 import Login from "./components/login/Login";
+import {AuthProvider} from "./context/authContext";
 
 function App() {
     const mensajes = [{
@@ -12,15 +13,17 @@ function App() {
     }]
 
   return (
-      <BrowserRouter>
-          <Routes>
-              <Route path="/" element={<Layout/>}>
-                  <Route index element={<Home/>}/>
-                  <Route path="/chat" element={<Chat mensajesProp={mensajes} />}/>
-                  <Route path="/login" element={<Login/>}/>
-              </Route>
-          </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+          <BrowserRouter>
+              <Routes>
+                  <Route path="/" element={<Layout/>}>
+                      <Route index element={<Home/>}/>
+                      <Route path="/chat" element={<Chat mensajesProp={mensajes} />}/>
+                      <Route path="/login" element={<Login/>}/>
+                  </Route>
+              </Routes>
+          </BrowserRouter>
+      </AuthProvider>
   );
 }
 
