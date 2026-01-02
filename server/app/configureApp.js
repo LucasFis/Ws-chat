@@ -8,6 +8,8 @@ import {UsuarioRepositorio} from "../repositorys/usuarioRepositorio.js";
 import {ChatRepositorio} from "../repositorys/chatRepositorio.js";
 import {UsuarioController} from "../controllers/usuarioController.js";
 import {ChatController} from "../controllers/chatController.js";
+import {loggerMiddleware} from "../middlewares/logger.js";
+import {errorHandler} from "../middlewares/errorHandler.js";
 
 const configure = (app, DB_URI, SECRET) => {
     app.use(cors([]))
@@ -23,13 +25,23 @@ const configure = (app, DB_URI, SECRET) => {
     );
     app.use(express.json())
 
+    app.use(loggerMiddleware)
+
+    configureRoutes(app)
+    const server = configureWs(app)
+
+    app.use(errorHandler)
+
     connectToDB(DB_URI);
+
+    return server
 }
 
 const configureRoutes = (app) =>{
     const {usuarioController, chatController} = prepareContext()
 
     app.post("/login", usuarioController.findByCredentials.bind(usuarioController))
+    app.post("/register", usuarioController.register.bind(usuarioController))
 }
 
 const configureWs = (app) => {
@@ -70,4 +82,4 @@ const prepareContext = () => {
     return {usuarioController, chatController}
 }
 
-export {configure, configureRoutes, configureWs};
+export {configure};

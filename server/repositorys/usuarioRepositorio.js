@@ -1,5 +1,7 @@
 import usuarioModel from "./../schemas/usuarioSchema.js";
 import {Usuario} from "../model/usuario.js";
+import bcrypt from "bcryptjs";
+import {BadInputException} from "../exceptions/badInput.js";
 
 export class UsuarioRepositorio {
     constructor() {
@@ -7,6 +9,13 @@ export class UsuarioRepositorio {
     }
 
     async create(user) {
+        const results = await this.model.find({nombre: user.nombre})
+
+        if(results.length > 0) {
+            throw new BadInputException("Ya existe un usuario con este nombre")
+        }
+
+        user.contrasenia = await bcrypt.hash(user.contrasenia, 10)
         const newUser = new this.model(usuarioADB(user))
         const userGuardado = await newUser.save()
 
@@ -14,12 +23,17 @@ export class UsuarioRepositorio {
     }
 
     async findByCredentials(nombre, contrasenia) {
-        //codificar contrasenia
-        const result = await this.model.findOne({nombre: nombre, contrasenia: contrasenia})
+        const result = await this.model.findOne({nombre: nombre})
 
-        if(!result) console.log("No results \n")
+        if(!result) {
+            throw new BadInputException("Nombre y/o contraseña incorrectos")
+        }
 
-        return usuarioDeDB(result)
+        const usuarioEncontrado = usuarioDeDB(result)
+
+        if(await bcrypt.compare(contrasenia, usuarioEncontrado.contrasenia)) {
+            return usuarioEncontrado
+        } else throw new BadInputException("Nombre y/o contraseña incorrectos")
     }
 }
 
