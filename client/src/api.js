@@ -14,4 +14,9 @@ const buscarChats = async () => {
     return results.data;
 }
 
-export {buscarUsuario, buscarChats}
+const crearUsuario = async (nombre, contrasenia) => {
+    const results = await axios.post(`${API_BASE_URL}/register`, {nombre, contrasenia})
+    return results.data;
+}
+
+export {buscarUsuario, buscarChats, crearUsuario}

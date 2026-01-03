@@ -3,11 +3,20 @@ import {AuthContext} from "../../context/authContext";
 import {useContext} from "react";
 
 const Message = ({autor, contenido}) => {
-    const {user} = useContext(AuthContext)
+    const {user} = useContext(AuthContext);
+
+    const esPropio = autor.id === user.id;
 
     return (
-        <h6 className="message">{autor.id === user.id ? "Tú" : autor.nombre}: {contenido}</h6>
-    )
-}
+        <div className={`message ${esPropio ? "own" : "other"}`}>
+            <span className="author">
+                {esPropio ? "Tú" : autor.nombre}
+            </span>
+            <p className="content">
+                {contenido}
+            </p>
+        </div>
+    );
+};
 
-export default Message
+export default Message;

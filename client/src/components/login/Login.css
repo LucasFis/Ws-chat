@@ -1,9 +1,76 @@
-.login-container {
-    display: flex;
-    flex-direction: column;
+/* Reset liviano */
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Contenedor general */
+.login-container {
+    min-height: calc(100vh - 64px); /* altura del navbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 20px;
+}
+
+/* Título */
+.login-container h2 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Tarjeta del login */
+.login-form {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 16px;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Contenedor de inputs */
 .form-input-container {
     display: flex;
     flex-direction: column;
+    gap: 6px;
+}
+
+/* Labels */
+.form-input-container label {
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 500;
+}
+
+/* Inputs */
+.form-input-container input {
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Focus */
+.form-input-container input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* Botón ocupa todo el ancho */
+.login-form .button.primary {
+    width: 100%;
 }

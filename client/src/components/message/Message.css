@@ -1,7 +1,39 @@
-.message{
-    background-color: rgba(129, 129, 129, 0.5);
-    padding: 8px;
-    font-size: 16px;
-    display: inline-block;
-    margin:0;
+.message {
+    max-width: 70%;
+    padding: 10px 20px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    word-wrap: break-word;
+}
+
+/* Mensaje propio */
+.message.own {
+    align-self: flex-end;
+    background: #667eea;
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+/* Mensaje ajeno */
+.message.other {
+    align-self: flex-start;
+    background: #f1f1f1;
+    color: #333;
+    border-bottom-left-radius: 4px;
+}
+
+/* Autor arriba */
+.message .author {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* Texto del mensaje */
+.message .content {
+    margin: 0;
 }

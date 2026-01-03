@@ -1,27 +1,57 @@
 .chat-card-container {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: black solid 2px;
-    width: 40%;
-    max-width: 400px;
-    padding:20px;
-    border-radius: 10px;
-    margin: 0.5rem;
+    gap: 20px;
+
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.chat-options {
+/* Hover elevación */
+.chat-card-container:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* Info */
+.chat-metainfo {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    list-style: none;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.chat-card-container h3 {
-    display: inline;
+.chat-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.chat-description {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Opciones */
+.chat-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    justify-content: flex-end;
 }
 
 .chat-option {
-    margin: 8px;
+    display: flex;
+}
+
+/* Botón ocupa ancho */
+.chat-option .button.primary {
+    padding: 10px 18px;
 }
