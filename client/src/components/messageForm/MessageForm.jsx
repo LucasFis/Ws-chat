@@ -1,10 +1,11 @@
-import "./Input.css"
-import {useState} from "react";
+import "./MessageForm.css"
+import {useContext, useState} from "react";
+import {AuthContext} from "../../context/authContext";
 
-const Input = ({className = "", manejadorSubmit}) => {
+const MessageForm = ({className = "", manejadorSubmit}) => {
     const [mensaje, setMensaje] = useState("");
 
-    const user = "lucas"
+    const {user} = useContext(AuthContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();// evita recargar la página
@@ -36,4 +37,4 @@ const Input = ({className = "", manejadorSubmit}) => {
     )
 }
 
-export default Input
+export default MessageForm

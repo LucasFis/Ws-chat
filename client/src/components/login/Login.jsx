@@ -8,8 +8,8 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await logIn(e.target.nombre.value, e.target.contrasenia.value)
-        alert("Logeo exitoso: " + user.nombre)
+        const result = await logIn(e.target.nombre.value, e.target.contrasenia.value)
+        alert("Logeo exitoso: " + result.nombre)
     }
 
     return (

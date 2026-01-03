@@ -1,10 +1,10 @@
 import "./Chat.css"
 import {Link} from "react-router-dom";
 import Message from "../message/Message";
-import Input from "../message-input/Input";
+import MessageForm from "../messageForm/MessageForm";
 import {useEffect, useRef, useState} from "react";
 
-const Chat = ({}) => {
+const Chat = () => {
     const [mensajes, setMensajes] = useState([])
     const wsRef = useRef(null)
 
@@ -22,7 +22,7 @@ const Chat = ({}) => {
         }
 
         ws.onerror = (err) => {
-            console.error("WebSocket error", err)
+            console.error("WebSocket error \n", err)
         }
 
         ws.onclose = () => {
@@ -43,7 +43,7 @@ const Chat = ({}) => {
             <Link to="/" className="button primary volver">{"<-  "}Volver</Link>
             <div className="chat-container">
                 {mensajes.map((m,key)=><Message key={key} content={m.content} author={m.author}/>)}
-                <Input className="input" manejadorSubmit={enviarMensaje}></Input>
+                <MessageForm className="input" manejadorSubmit={enviarMensaje}></MessageForm>
             </div>
         </div>
     )

@@ -13,9 +13,13 @@ import {errorHandler} from "../middlewares/errorHandler.js";
 
 const configure = (app, DB_URI, SECRET) => {
     app.use(cors({
-        origin: "http://localhost:3001",
+        origin: [
+            "http://localhost:3001",
+            "http://localhost:3002"
+        ],
         credentials: true
     }))
+
     app.use(
         session({
             secret: SECRET, // clave para firmar la sesión

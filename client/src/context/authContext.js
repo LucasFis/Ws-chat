@@ -4,14 +4,15 @@ import {buscarUsuario} from "../api";
 export const AuthContext = createContext({})
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(undefined)
 
     const logIn = async (nombre, contrasenia) => {
         const response = await buscarUsuario(nombre, contrasenia);
         setUser(response)
+        return response;
     }
     const logOut = async () => {
-        setUser(null)
+        setUser(undefined)
     }
 
     const contextValue = {

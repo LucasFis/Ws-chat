@@ -7,18 +7,14 @@ import Login from "./components/login/Login";
 import {AuthProvider} from "./context/authContext";
 
 function App() {
-    const mensajes = [{
-        author: "lucas",
-        content: "Hola mundo"
-    }]
 
-  return (
+    return (
       <AuthProvider>
           <BrowserRouter>
               <Routes>
                   <Route path="/" element={<Layout/>}>
                       <Route index element={<Home/>}/>
-                      <Route path="/chat" element={<Chat mensajesProp={mensajes} />}/>
+                      <Route path="/chat" element={<Chat />}/>
                       <Route path="/login" element={<Login/>}/>
                   </Route>
               </Routes>

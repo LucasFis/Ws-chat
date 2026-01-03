@@ -27,6 +27,10 @@
     height: 100%;
 }
 
+.icon-container:hover {
+    cursor: pointer;
+}
+
 .icon {
     height: 100%;
     display: flex;

@@ -1,5 +1,6 @@
 import "./Home.css"
 import ChatCard from "../chatcard/ChatCard";
+
 const Home = () => {
 
     const chatList = [
