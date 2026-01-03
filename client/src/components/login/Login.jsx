@@ -1,15 +1,19 @@
 import "./Login.css"
 import {useContext} from "react"
 import {AuthContext} from "../../context/authContext";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
-    const {user, logIn} = useContext(AuthContext)
+    const {logIn} = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const result = await logIn(e.target.nombre.value, e.target.contrasenia.value)
         alert("Logeo exitoso: " + result.nombre)
+
+        navigate("/")
     }
 
     return (
