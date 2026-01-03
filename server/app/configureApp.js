@@ -8,7 +8,9 @@ import {UsuarioController} from "../controllers/usuarioController.js";
 import {ChatController} from "../controllers/chatController.js";
 import {loggerMiddleware} from "../middlewares/logger.js";
 import {errorHandler} from "../middlewares/errorHandler.js";
-import {configureWs} from "../ws/chatWs.js";
+import {configureWsChat} from "../ws/chatWs.js";
+import http from "http";
+import {WebSocketServer} from "ws";
 
 const configure = (app, DB_URI, SECRET) => {
     app.use(cors({
@@ -50,6 +52,16 @@ const configureRoutes = (app) =>{
     app.post("/register", usuarioController.register.bind(usuarioController))
 
     app.get("/chats", chatController.findAll.bind(chatController))
+}
+
+const configureWs = (app) =>{
+
+    const server = http.createServer(app);
+    const wssChat = new WebSocketServer({server, path: "/chat"},  );
+
+    configureWsChat(wssChat)
+
+    return server
 }
 
 const prepareContext = () => {

@@ -1,4 +1,4 @@
-import {Usuario} from "../model/usuario.js";
+import {usuarioADTO, usuarioDeDTO} from "../DTOs.js";
 
 export class UsuarioController {
     constructor(usuarioRepo) {
@@ -33,13 +33,3 @@ export class UsuarioController {
     }
 }
 
-export function usuarioADTO(usuario) {
-    return {
-        nombre: usuario.nombre,
-        id: usuario.id
-    }
-}
-
-export function usuarioDeDTO(usuario) {
-    return new Usuario(usuario)
-}

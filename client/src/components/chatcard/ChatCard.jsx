@@ -1,7 +1,13 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import "./ChatCard.css"
+import {useContext} from "react";
+import {AuthContext} from "../../context/authContext";
 
 const ChatCard = ({chat}) => {
+
+    const navigate = useNavigate()
+
+    const {user} = useContext(AuthContext);
 
     return (
         <div className="chat-card-container">
@@ -10,8 +16,20 @@ const ChatCard = ({chat}) => {
                 <p className="chat-description">{chat.descripcion}</p>
             </div>
             <ul className="chat-options">
-                <li className="chat-option"><Link to={`/chat?chatId=${chat.id}`} className="button primary">visitar</Link></li>
-                <li className="chat-option"><Link to="" className="button secondary">otra opcion</Link></li>
+                <li className="chat-option">
+                    <button
+                        className="button primary"
+                        onClick={() => {
+                            if (!user) {
+                                navigate("/login");
+                            } else {
+                                navigate(`/chat?chatId=${chat.id}`);
+                            }
+                        }}
+                    >
+                        visitar
+                    </button>
+                </li>
             </ul>
         </div>
     )

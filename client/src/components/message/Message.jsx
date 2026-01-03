@@ -5,8 +5,6 @@ import {useContext} from "react";
 const Message = ({autor, contenido}) => {
     const {user} = useContext(AuthContext)
 
-    console.log(autor, contenido)
-
     return (
         <h6 className="message">{autor.id === user.id ? "Tú" : autor.nombre}: {contenido}</h6>
     )

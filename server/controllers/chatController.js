@@ -1,4 +1,4 @@
-import {usuarioADTO} from "./usuarioController.js";
+import {chatADTO} from "../DTOs.js";
 
 export class ChatController {
     constructor(chatRepo){
@@ -14,15 +14,4 @@ export class ChatController {
     }
 }
 
-export function chatADTO(chat){
-    return {
-        id: chat.id,
-        nombre: chat.nombre,
-        mensajes: chat.mensajes.map(m => {
-            return {
-                autor: usuarioADTO(m.autor),
-                contenido: m.contenido}
-            }
-        )
-    }
-}
+

@@ -37,7 +37,7 @@ export function chatDeDB(chat) {
         return new Mensaje(autor, m.contenido, m.fecha, m._id)
     })
 
-    return new Chat({nombre: chat.nombre, mensajes, id: chat._id})
+    return new Chat({nombre: chat.nombre, mensajes, id: chat._id, descripcion: chat.descripcion})
 }
 
 export function chatADB(chat){

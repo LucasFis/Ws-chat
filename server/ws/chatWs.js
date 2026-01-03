@@ -1,14 +1,11 @@
-import http from "http";
-import {WebSocket, WebSocketServer} from "ws";
+import {WebSocket} from "ws";
 import {ChatRepositorio} from "./../repositorys/chatRepositorio.js"
+import {chatADTO} from "../DTOs.js";
 
 const rooms = new Map();
 
-export const configureWs = (app) => {
+export const configureWsChat = (wss) => {
     const chatRepo = new ChatRepositorio();
-
-    const server = http.createServer(app);
-    const wss = new WebSocketServer({server, path: "/chat"},  );
 
     wss.on("connection", async (ws, req) => {
 
@@ -32,7 +29,7 @@ export const configureWs = (app) => {
 
         ws.send(JSON.stringify({
             type: "INIT_CHAT",
-            data: chat
+            data: chatADTO(chat)
         }))
 
         console.log("ws://chat sended ", chatId)
@@ -47,8 +44,6 @@ export const configureWs = (app) => {
             console.log("ws://chat disconnected")
         });
     });
-
-    return server;
 }
 
 const messageHandler = async (event, chatId, chatRepo) => {
