@@ -6,6 +6,7 @@ import Chat from "./components/chat/Chat.jsx";
 import Login from "./components/login/Login";
 import {AuthProvider} from "./context/authContext";
 import Register from "./components/register/Register";
+import ErrorPage from "./components/error/ErrorPage";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
                       <Route path="/chat" element={<Chat />}/>
                       <Route path="/login" element={<Login/>}/>
                       <Route path="/register" element={<Register/>}/>
+                      <Route path="*" element={<ErrorPage />} />
                   </Route>
               </Routes>
           </BrowserRouter>
