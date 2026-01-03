@@ -26,7 +26,7 @@ const Chat = () => {
         }
 
         ws.onmessage = (event) => {
-            wsHandler(event, [mensajes, setMensajes], setNombre)
+            wsHandler(event, setMensajes, setNombre)
         }
 
         ws.onerror = (err) => {
