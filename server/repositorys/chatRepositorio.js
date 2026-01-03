@@ -3,6 +3,7 @@ import {Chat} from "../model/chat.js";
 import {Mensaje} from "../model/mensaje.js";
 import {Usuario} from "../model/usuario.js";
 import {usuarioDeDB} from "./usuarioRepositorio.js"
+import {ChatNotFoundException} from "../exceptions/ChatNotFound.js";
 
 export class ChatRepositorio {
     constructor() {
@@ -10,10 +11,10 @@ export class ChatRepositorio {
     }
 
     async findById(id) {
-        const result = this.model.findOne({id: id})
+        const result = await this.model.findOne({_id: id})
 
         if (!result) {
-            // exception
+            throw new ChatNotFoundException("El chat ingresado no existe")
         }
         return chatDeDB(result)
     }
@@ -25,7 +26,6 @@ export function chatDeDB(chat) {
         const usuario = new Usuario(usuarioDeDB(m.usuario))
         return new Mensaje(usuario, m.contenido, m.fecha, m._id)
     })
-
 
     return new Chat({mensajes, id: chat._id})
 }

@@ -19,9 +19,8 @@ const chatSchema = new mongoose.Schema({
     mensajes: [mensajeSchema]
 });
 
-chatSchema.pre(/^find/, function(next) {
+chatSchema.pre(/^find/, function() {
     this.populate("mensajes.autor");
-    next();
 });
 
 chatSchema.loadClass(Chat)

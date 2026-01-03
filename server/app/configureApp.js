@@ -2,14 +2,13 @@ import cors from "cors";
 import session from "express-session";
 import express from "express";
 import {connectToDB} from "./db.js";
-import {WebSocket, WebSocketServer} from "ws";
-import http from "http"
 import {UsuarioRepositorio} from "../repositorys/usuarioRepositorio.js";
 import {ChatRepositorio} from "../repositorys/chatRepositorio.js";
 import {UsuarioController} from "../controllers/usuarioController.js";
 import {ChatController} from "../controllers/chatController.js";
 import {loggerMiddleware} from "../middlewares/logger.js";
 import {errorHandler} from "../middlewares/errorHandler.js";
+import {configureWs} from "../ws/chatWs.js";
 
 const configure = (app, DB_URI, SECRET) => {
     app.use(cors({
@@ -49,35 +48,6 @@ const configureRoutes = (app) =>{
 
     app.post("/login", usuarioController.findByCredentials.bind(usuarioController))
     app.post("/register", usuarioController.register.bind(usuarioController))
-}
-
-const configureWs = (app) => {
-
-    const server = http.createServer(app);
-    const wss = new WebSocketServer({server});
-
-    wss.on("connection", (ws) => {
-
-        console.log("user conected")
-
-        ws.on("message", (msg) => {
-            const mensaje = JSON.parse(msg.toString())
-
-            console.log(`Recibido: (${mensaje.author})`, mensaje.content)
-
-            wss.clients.forEach(client => {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify(mensaje))
-                }
-            })
-        })
-
-        ws.on("close", () => {
-            console.log("Cliente desconectado");
-        });
-    });
-
-    return server;
 }
 
 const prepareContext = () => {
