@@ -5,6 +5,7 @@ import Layout from "./components/layout/Layout";
 import Chat from "./components/chat/Chat.jsx";
 import Login from "./components/login/Login";
 import {AuthProvider} from "./context/authContext";
+import Register from "./components/register/Register";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
                       <Route index element={<Home/>}/>
                       <Route path="/chat" element={<Chat />}/>
                       <Route path="/login" element={<Login/>}/>
+                      <Route path="/register" element={<Register/>}/>
                   </Route>
               </Routes>
           </BrowserRouter>

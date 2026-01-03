@@ -19,23 +19,64 @@ code {
 }
 
 .button {
-    padding: 0.7rem;
-    display: inline-block;
     text-decoration: none;
-    border: grey solid 2px;
-    border-radius: 20px;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+            background 0.15s ease,
+            color 0.15s ease,
+            box-shadow 0.15s ease,
+            transform 0.15s ease;
 }
 
-.primary {
-    background-color: #838383;
-    color: white;
+
+/* Botón */
+.button.primary {
+    background: #667eea;
+    color: #fff;
+    border: none;
 }
 
-.secondary {
-    color: black;
+.button.primary:hover {
+    background: #5a6fe0;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
 }
 
-.button:hover {
-    border: black solid 2px;
-    transition: 0.5s;
+
+/* Active */
+.button.primary:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 12px rgba(102, 126, 234, 0.3);
 }
+
+.button.secondary {
+    background: transparent;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.button.secondary:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.25);
+}
+
+.button.tertiary {
+    text-decoration: underline;
+    background: none;
+    color: #666;
+    border: none;
+    padding: 8px;
+    font-weight: 500;
+}
+
+.button.tertiary:hover {
+    color: #667eea;
+    text-decoration: underline;
+}
+
+
