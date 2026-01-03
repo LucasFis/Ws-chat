@@ -2,11 +2,13 @@ import "./Message.css"
 import {AuthContext} from "../../context/authContext";
 import {useContext} from "react";
 
-const Message = ({author, content}) => {
+const Message = ({autor, contenido}) => {
     const {user} = useContext(AuthContext)
 
+    console.log(autor, contenido)
+
     return (
-        <h6 className="message">{author.id === user.id ? "Tú" : author.nombre}: {content}</h6>
+        <h6 className="message">{autor.id === user.id ? "Tú" : autor.nombre}: {contenido}</h6>
     )
 }
 

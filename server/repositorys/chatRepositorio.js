@@ -24,14 +24,33 @@ export class ChatRepositorio {
 
         return results.map(c => chatDeDB(c))
     }
+
+    async update(chat){
+        return this.model.updateOne({_id: chat.id}, chatADB(chat));
+    }
 }
 
 export function chatDeDB(chat) {
 
     const mensajes = chat.mensajes.map(m => {
-        const usuario = new Usuario(usuarioDeDB(m.usuario))
-        return new Mensaje(usuario, m.contenido, m.fecha, m._id)
+        const autor = new Usuario(usuarioDeDB(m.autor))
+        return new Mensaje(autor, m.contenido, m.fecha, m._id)
     })
 
     return new Chat({nombre: chat.nombre, mensajes, id: chat._id})
+}
+
+export function chatADB(chat){
+    const mensajes = chat.mensajes.map(m => {
+        return {
+            contenido: m.contenido,
+            autor: m.autor.id,
+            fecha: m.fecha
+        }
+    })
+    return {
+        nombre: chat.nombre,
+        mensajes: mensajes,
+        _id: chat.id,
+    }
 }

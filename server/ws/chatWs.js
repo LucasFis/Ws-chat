@@ -40,9 +40,28 @@ export const configureWs = (app) => {
         ws.on("message", (msg) => {
             const payload = JSON.parse(msg.toString())
 
-            const data = payload.data;
+            messageHandler(payload, chatId, chatRepo);
+        })
 
-            console.log(`${payload.type}: (${data.author.nombre})`, data.content)
+        ws.on("close", () => {
+            console.log("ws://chat disconnected")
+        });
+    });
+
+    return server;
+}
+
+const messageHandler = async (event, chatId, chatRepo) => {
+    const data = event.data;
+
+    switch(event.type) {
+        case "SEND_MESSAGE":
+
+            const chat = await chatRepo.findById(chatId);
+
+            chat.mensajes.push(event.data)
+
+            chatRepo.update(chat);
 
             const newMessage = {
                 type: "RECEIVE_MESSAGE",
@@ -54,12 +73,8 @@ export const configureWs = (app) => {
                     client.send(JSON.stringify(newMessage));
                 }
             });
-        })
+            break;
+    }
 
-        ws.on("close", () => {
-            console.log("ws://chat disconnected")
-        });
-    });
-
-    return server;
+    console.log(`${event.type}: (${data.autor.nombre})`, data.contenido)
 }

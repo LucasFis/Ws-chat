@@ -10,8 +10,8 @@ const MessageForm = ({className = "", manejadorSubmit}) => {
     const handleSubmit = (e) => {
         e.preventDefault();// evita recargar la página
         const newMensaje = {
-            author: user,
-            content: mensaje,
+            autor: user,
+            contenido: mensaje,
         }
         manejadorSubmit(newMensaje);    // mandás el contenido
         setMensaje("");              // limpiás el input

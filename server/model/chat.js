@@ -1,6 +1,7 @@
 export class Chat {
-    constructor({nombre, mensajes = [], id = undefined}){
+    constructor({nombre, descripcion,mensajes = [], id = undefined}){
         this.nombre = nombre;
+        this.descripcion = descripcion;
         this.mensajes = mensajes;
         this.id = id;
     }

@@ -1,6 +1,6 @@
 export class Mensaje {
-    constructor(usuario, contenido, fecha){
-        this.usuario = usuario;
+    constructor(autor, contenido, fecha){
+        this.autor = autor;
         this.contenido = contenido
         this.fecha = fecha
     }

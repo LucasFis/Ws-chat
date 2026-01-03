@@ -52,13 +52,11 @@ const Chat = () => {
         wsRef.current.send(JSON.stringify(payload))
     }
 
-    console.log(mensajes)
-
     return (
         <div className="chat-body">
             <Link to="/" className="button primary volver">{"<-  "}Volver</Link>
             <div className="chat-container">
-                {mensajes.map((m,key)=><Message key={key} content={m.content} author={m.author}/>)}
+                {mensajes.map((m,key)=><Message key={key} contenido={m.contenido} autor={m.autor}/>)}
                 <MessageForm className="input" manejadorSubmit={enviarMensaje}></MessageForm>
             </div>
         </div>
