@@ -48,6 +48,8 @@ const configureRoutes = (app) =>{
 
     app.post("/login", usuarioController.findByCredentials.bind(usuarioController))
     app.post("/register", usuarioController.register.bind(usuarioController))
+
+    app.get("/chats", chatController.findAll.bind(chatController))
 }
 
 const prepareContext = () => {

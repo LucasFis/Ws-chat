@@ -9,4 +9,9 @@ const buscarUsuario = async (nombre, contrasenia) => {
     return results.data;
 }
 
-export {buscarUsuario}
+const buscarChats = async () => {
+    const results = await axios.get(`${API_BASE_URL}/chats`);
+    return results.data;
+}
+
+export {buscarUsuario, buscarChats}

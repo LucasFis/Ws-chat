@@ -18,6 +18,12 @@ export class ChatRepositorio {
         }
         return chatDeDB(result)
     }
+
+    async findAll(){
+        const results = await this.model.find({})
+
+        return results.map(c => chatDeDB(c))
+    }
 }
 
 export function chatDeDB(chat) {
@@ -27,5 +33,5 @@ export function chatDeDB(chat) {
         return new Mensaje(usuario, m.contenido, m.fecha, m._id)
     })
 
-    return new Chat({mensajes, id: chat._id})
+    return new Chat({nombre: chat.nombre, mensajes, id: chat._id})
 }

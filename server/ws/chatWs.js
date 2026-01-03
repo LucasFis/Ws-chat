@@ -12,6 +12,8 @@ export const configureWs = (app) => {
 
     wss.on("connection", async (ws, req) => {
 
+        console.log("ws://chat connected")
+
         const url = new URL(req.url, "http://localhost");
         const chatId = url.searchParams.get("chatId");
 
@@ -28,22 +30,34 @@ export const configureWs = (app) => {
 
         const chat = await chatRepo.findById(chatId);
 
-        ws.send(JSON.stringify(chat))
+        ws.send(JSON.stringify({
+            type: "INIT_CHAT",
+            data: chat
+        }))
+
+        console.log("ws://chat sended ", chatId)
 
         ws.on("message", (msg) => {
-            const mensaje = JSON.parse(msg.toString())
+            const payload = JSON.parse(msg.toString())
 
-            console.log(`Recibido: (${mensaje.author})`, mensaje.content)
+            const data = payload.data;
+
+            console.log(`${payload.type}: (${data.author.nombre})`, data.content)
+
+            const newMessage = {
+                type: "RECEIVE_MESSAGE",
+                data: data
+            }
 
             rooms.get(chatId).forEach(client => {
                 if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify(mensaje));
+                    client.send(JSON.stringify(newMessage));
                 }
             });
         })
 
         ws.on("close", () => {
-            console.log("Cliente desconectado");
+            console.log("ws://chat disconnected")
         });
     });
 

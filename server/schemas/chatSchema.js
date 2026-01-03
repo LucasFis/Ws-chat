@@ -3,6 +3,7 @@ import {Chat} from "../model/chat.js";
 
 const mensajeSchema = new mongoose.Schema({
     contenido: String,
+    descripcion: String,
     autor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Usuario",
