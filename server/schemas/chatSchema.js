@@ -18,13 +18,12 @@ const mensajeSchema = new mongoose.Schema({
 const chatSchema = new mongoose.Schema({
     nombre: String,
     descripcion: String,
-    mensajes: [mensajeSchema]
+    mensajes: [mensajeSchema],
+    privacidad: String
 });
 
 chatSchema.pre(/^find/, function() {
     this.populate("mensajes.autor");
 });
-
-chatSchema.loadClass(Chat)
 
 export default mongoose.model("Chat", chatSchema);

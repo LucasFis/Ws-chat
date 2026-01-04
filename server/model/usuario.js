@@ -6,4 +6,7 @@ export class Usuario {
         this.id = id
     }
 
+    agregarChat(chat) {
+        this.chats.push(chat)
+    }
 }

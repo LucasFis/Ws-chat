@@ -1,4 +1,4 @@
-export class ChatNotFoundException extends Error {
+export class NotFoundException extends Error {
     code = 404
     constructor(message) {
         super();

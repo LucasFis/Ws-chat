@@ -19,9 +19,9 @@ export class UsuarioController {
     }
 
     async findByCredentials(req, res, next) {
-
         try{
             const {nombre, contrasenia} = req.body
+
             const usuario = await this.usuarioRepo.findByCredentials(nombre, contrasenia)
 
             req.session.user = usuario.id;

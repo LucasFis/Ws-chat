@@ -2,55 +2,70 @@ import chatModel from "./../schemas/chatSchema.js"
 import {Chat} from "../model/chat.js";
 import {Mensaje} from "../model/mensaje.js";
 import {Usuario} from "../model/usuario.js";
-import {usuarioDeDB} from "./usuarioRepositorio.js"
-import {ChatNotFoundException} from "../exceptions/ChatNotFound.js";
+import {usuarioDeDB, usuarioSimpleDeDB} from "./usuarioRepositorio.js"
+import {NotFoundException} from "../exceptions/NotFound.js";
+import {Privacidad} from "../model/privacidad.js";
 
 export class ChatRepositorio {
     constructor() {
         this.model = chatModel
     }
 
+    async create(nombre, descripcion, privacidad) {
+        const newChat = new this.model({nombre, descripcion, privacidad, mensajes: []})
+        const nuevoChat = await newChat.save()
+        return chatDeDB(nuevoChat)
+    }
+
     async findById(id) {
         const result = await this.model.findOne({_id: id})
 
         if (!result) {
-            throw new ChatNotFoundException("El chat ingresado no existe")
+            throw new NotFoundException("El chat ingresado no existe")
         }
         return chatDeDB(result)
     }
 
-    async findAll(){
-        const results = await this.model.find({})
-
-        return results.map(c => chatDeDB(c))
-    }
-
-    async update(chat){
-        return this.model.updateOne({_id: chat.id}, chatADB(chat));
+    async updateMessages(chat){
+        const chatDB = await this.model.findById(chat.id)
+        chatDB.mensajes = chat.mensajes.map(m=> mensajesADB(m))
+        await chatDB.save();
     }
 }
 
 export function chatDeDB(chat) {
 
-    const mensajes = chat.mensajes.map(m => {
-        const autor = new Usuario(usuarioDeDB(m.autor))
-        return new Mensaje(autor, m.contenido, m.fecha, m._id)
-    })
+    const mensajes = chat.mensajes.map(m => mensajeDeDB(m))
 
-    return new Chat({nombre: chat.nombre, mensajes, id: chat._id, descripcion: chat.descripcion})
+    return new Chat({
+        nombre: chat.nombre, mensajes, id: chat._id,
+        descripcion: chat.descripcion, privacidad: Privacidad.fromString(chat.privacidad)
+    })
 }
 
 export function chatADB(chat){
-    const mensajes = chat.mensajes.map(m => {
-        return {
-            contenido: m.contenido,
-            autor: m.autor.id,
-            fecha: m.fecha
-        }
-    })
+    const mensajes = chat.mensajes.map(m => mensajesADB(m))
+
     return {
         nombre: chat.nombre,
         mensajes: mensajes,
         _id: chat.id,
+        privacidad: chat.privacidad.getNombre()
+    }
+}
+
+export function mensajeDeDB(mensajeDB) {
+    const autor = usuarioSimpleDeDB(mensajeDB.autor)
+    return new Mensaje({
+        autor, contenido: mensajeDB.contenido,
+        fecha: mensajeDB.fecha
+    })
+}
+
+export function mensajesADB(mensaje){
+    return {
+        contenido: mensaje.contenido,
+        autor: mensaje.autor.id,
+        fecha: mensaje.fecha
     }
 }

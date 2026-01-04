@@ -1,11 +1,13 @@
 import {WebSocket} from "ws";
 import {ChatRepositorio} from "./../repositorys/chatRepositorio.js"
-import {chatADTO} from "../DTOs.js";
+import {chatADTO, mensajeDeDTO} from "../DTOs.js";
+import {UsuarioRepositorio} from "../repositorys/usuarioRepositorio.js";
 
 const rooms = new Map();
 
 export const configureWsChat = (wss) => {
     const chatRepo = new ChatRepositorio();
+    const usuarioRepo = new UsuarioRepositorio()
 
     wss.on("connection", (ws, req) => {
 
@@ -14,14 +16,12 @@ export const configureWsChat = (wss) => {
         const url = new URL(req.url, "http://localhost");
         const chatId = url.searchParams.get("chatId");
 
-
-
         init(ws, chatId, chatRepo);
 
         ws.on("message", (msg) => {
             const payload = JSON.parse(msg.toString())
 
-            messageHandler(payload, chatId, chatRepo);
+            messageHandler(payload, chatId, chatRepo, usuarioRepo);
         })
 
         ws.on("close", () => {
@@ -53,7 +53,7 @@ const init = async (ws, chatId, chatRepo) => {
     console.log("ws://chat sended ", chatId)
 }
 
-const messageHandler = async (event, chatId, chatRepo) => {
+const messageHandler = async (event, chatId, chatRepo, usuarioRepo) => {
     const data = event.data;
 
     switch(event.type) {
@@ -61,9 +61,11 @@ const messageHandler = async (event, chatId, chatRepo) => {
 
             const chat = await chatRepo.findById(chatId);
 
-            chat.mensajes.push(event.data)
+            const autor = await usuarioRepo.findById(data.autor.id);
 
-            chatRepo.update(chat);
+            chat.agregarMensaje(mensajeDeDTO(event.data, autor))
+
+            chatRepo.updateMessages(chat);
 
             const newMessage = {
                 type: "RECEIVE_MESSAGE",
@@ -77,6 +79,4 @@ const messageHandler = async (event, chatId, chatRepo) => {
             });
             break;
     }
-
-    console.log(`${event.type}: (${data.autor.nombre})`, data.contenido)
 }
