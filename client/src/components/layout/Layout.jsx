@@ -14,7 +14,22 @@ const Layout = () => {
                 <div className="icon-container" onClick={() => navigate("/")}>
                     <span className="icon">💬</span>
                     <h1 className="nav-title">Chatters</h1>
+                    {user ? <ul className="options">
+
+                            <li>
+                                <button className="button tertiary" onClick={() => {
+                                    navigate("/")
+                                }}>chats
+                                </button>
+                                <button className="button tertiary" onClick={() => {
+                                    navigate("/users")
+                                }}>usuarios
+                                </button>
+                            </li>
+                        </ul>
+                        : <></>}
                 </div>
+
                 <ul className="options">
                     {user ? (
                         <li className="user-menu">

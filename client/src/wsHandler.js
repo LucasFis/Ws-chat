@@ -1,4 +1,4 @@
-export const wsHandler = (event,  setMensajes, setNombre) => {
+export const wsHandler = (event, setMensajes, setNombre) => {
     const payload = JSON.parse(event.data)
 
     switch (payload.type) {
