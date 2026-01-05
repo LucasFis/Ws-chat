@@ -1,0 +1,51 @@
+/* Card del usuario */
+.user-card {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    cursor: default;
+}
+
+/* Hover */
+.user-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* Avatar */
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    font-size: 1.3rem;
+}
+
+/* Info */
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Nombre */
+.user-name {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}

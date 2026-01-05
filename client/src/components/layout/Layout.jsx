@@ -11,36 +11,51 @@ const Layout = () => {
     return (
         <>
             <nav className="navbar">
-                <div className="icon-container" onClick={() => navigate("/")}>
-                    <span className="icon">💬</span>
-                    <h1 className="nav-title">Chatters</h1>
-                    {user ? <ul className="options">
+                {/* LADO IZQUIERDO */}
+                <div className="nav-left">
+                    {/* LOGO */}
+                    <div
+                        className="icon-container"
+                        onClick={() => navigate("/")}
+                    >
+                        <span className="icon">💬</span>
+                        <h1 className="nav-title">Chatters</h1>
+                    </div>
 
-                            <li>
-                                <button className="button tertiary" onClick={() => {
-                                    navigate("/")
-                                }}>chats
-                                </button>
-                                <button className="button tertiary" onClick={() => {
-                                    navigate("/users")
-                                }}>usuarios
-                                </button>
-                            </li>
-                        </ul>
-                        : <></>}
+                    {/* LINKS */}
+                    {user && (
+                        <div className="nav-links">
+                            <button
+                                className="button tertiary"
+                                onClick={() => navigate("/")}
+                            >
+                                chats
+                            </button>
+                            <button
+                                className="button tertiary"
+                                onClick={() => navigate("/users")}
+                            >
+                                usuarios
+                            </button>
+                        </div>
+                    )}
                 </div>
 
+                {/* LADO DERECHO */}
                 <ul className="options">
                     {user ? (
                         <li className="user-menu">
-                            <div className="user-info">
+                            <div className="user-container">
                                 <span className="user-icon">👤</span>
                                 <span className="user-name">{user.nombre}</span>
                             </div>
-                            <button className="button primary" onClick={() => {
-                                logOut();
-                                navigate("/")
-                            }}>
+                            <button
+                                className="button primary"
+                                onClick={() => {
+                                    logOut();
+                                    navigate("/");
+                                }}
+                            >
                                 Cerrar sesión
                             </button>
                         </li>

@@ -8,6 +8,7 @@ import {AuthProvider} from "./context/authContext";
 import Register from "./components/register/Register";
 import ErrorPage from "./components/error/ErrorPage";
 import NewChat from "./components/newChat/NewChat";
+import Users from "./components/users/Users";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
                       <Route path="/login" element={<Login/>}/>
                       <Route path="/register" element={<Register/>}/>
                       <Route path="/newChat" element={<NewChat/>} />
+                      <Route path="/users" element={<Users/>} />
                       <Route path="*" element={<ErrorPage />} />
                   </Route>
               </Routes>

@@ -25,4 +25,9 @@ const crearChat = async (nombre, descripcion, privacidad) => {
     return results.data;
 }
 
-export {buscarUsuario, buscarChats, crearUsuario, crearChat}
+const buscarUsuarios = async () => {
+    const results = await axios.get(`${API_BASE_URL}/users`);
+    return results.data;
+}
+
+export {buscarUsuario, buscarChats, crearUsuario, crearChat, buscarUsuarios}

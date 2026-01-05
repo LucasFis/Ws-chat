@@ -1,5 +1,5 @@
 import "./Chat.css";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Message from "../message/Message";
 import MessageForm from "../messageForm/MessageForm";
 import { useEffect, useRef, useState } from "react";
@@ -13,6 +13,7 @@ const Chat = () => {
     const [nombre, setNombre] = useState("No Especificado");
     const wsRef = useRef(null);
     const messagesEndRef = useRef(null);
+    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
     const chatId = searchParams.get("chatId");
@@ -42,10 +43,13 @@ const Chat = () => {
         };
     }, [chatId]);
 
-    /* Auto-scroll al último mensaje */
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [mensajes]);
+
+    const handleInvite = () => {
+        navigate(`/users?invite=${chatId}`);
+    }
 
     const enviarMensaje = (mensaje) => {
         const payload = {
@@ -63,6 +67,9 @@ const Chat = () => {
                     {"<- "}Volver
                 </Link>
                 <h2>{nombre}</h2>
+                <button className="button tertiary" onClick={() => {
+                    handleInvite()
+                }}>Agregar al chat</button>
             </div>
 
             <div className="chat-container">

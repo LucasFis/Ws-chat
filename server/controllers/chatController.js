@@ -8,10 +8,13 @@ export class ChatController {
 
     async findAll(req, res, next) {
         try {
-            const usuario = await this.usuarioRepo.findById(req.session.user);
+            let chatsUsuario = []
+            if(req.session.user) {
+                const usuario = await this.usuarioRepo.findById(req.session.user);
+                chatsUsuario = usuario.chats;
+            }
 
             let chatsPublicos = await this.chatRepo.findPublic();
-            let chatsUsuario = usuario.chats;
 
             const chatsUnicos = new Map();
 
