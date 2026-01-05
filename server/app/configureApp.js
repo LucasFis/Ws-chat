@@ -52,6 +52,7 @@ const configureRoutes = (app) =>{
     app.post("/login", usuarioController.findByCredentials.bind(usuarioController))
     app.post("/register", usuarioController.register.bind(usuarioController))
     app.get("/users", usuarioController.findAll.bind(usuarioController))
+    app.patch("/users/:id/chats", usuarioController.agregarChat.bind(usuarioController))
 
     app.get("/chats", chatController.findAll.bind(chatController))
     app.post("/chats", chatController.create.bind(chatController))
@@ -70,7 +71,7 @@ const configureWs = (app) =>{
 const prepareContext = () => {
     const usuarioRepo = new UsuarioRepositorio()
     const chatRepo = new ChatRepositorio()
-    const usuarioController = new UsuarioController(usuarioRepo)
+    const usuarioController = new UsuarioController(usuarioRepo, chatRepo)
     const chatController = new ChatController(chatRepo, usuarioRepo)
 
     return {usuarioController, chatController}

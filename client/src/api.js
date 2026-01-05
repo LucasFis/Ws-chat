@@ -30,4 +30,9 @@ const buscarUsuarios = async () => {
     return results.data;
 }
 
-export {buscarUsuario, buscarChats, crearUsuario, crearChat, buscarUsuarios}
+const agregarChat = async (userId, chatId) => {
+    const results = await axios.patch(`${API_BASE_URL}/users/${userId}/chats`, {chatId})
+    return results.data;
+}
+
+export {buscarUsuario, buscarChats, crearUsuario, crearChat, buscarUsuarios, agregarChat}

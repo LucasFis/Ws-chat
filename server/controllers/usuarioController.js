@@ -1,8 +1,29 @@
 import {usuarioADTO, usuarioDeDTO} from "../DTOs.js";
 
 export class UsuarioController {
-    constructor(usuarioRepo) {
+    constructor(usuarioRepo, chatRepo) {
         this.usuarioRepo = usuarioRepo;
+        this.chatRepo = chatRepo;
+    }
+
+    async agregarChat(req, res, next) {
+        try {
+            const id = req.params.id;
+            const {chatId} = req.body;
+
+            const usuario = await this.usuarioRepo.findById(id);
+
+            const chat = await this.chatRepo.findById(chatId);
+
+            usuario.agregarChat(chat)
+
+            await this.usuarioRepo.update(usuario)
+
+            res.status(202).json(usuario)
+        } catch (error) {
+            next(error);
+        }
+
     }
 
     async findAll(req, res, next) {
