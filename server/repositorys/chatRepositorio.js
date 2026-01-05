@@ -11,6 +11,11 @@ export class ChatRepositorio {
         this.model = chatModel
     }
 
+    async findPublic() {
+        const results = await this.model.find({privacidad: "PUBLICO"})
+        return results.map(c => chatDeDB(c))
+    }
+
     async create(nombre, descripcion, privacidad) {
         const newChat = new this.model({nombre, descripcion, privacidad, mensajes: []})
         const nuevoChat = await newChat.save()

@@ -8,17 +8,29 @@ export class ChatController {
 
     async findAll(req, res, next) {
         try {
-            const usuario = await this.usuarioRepo.findById(req.session.user)
+            const usuario = await this.usuarioRepo.findById(req.session.user);
 
-            let chats = usuario.chats
+            let chatsPublicos = await this.chatRepo.findPublic();
+            let chatsUsuario = usuario.chats;
 
-            chats = chats.map(c => chatADTO(c))
+            const chatsUnicos = new Map();
 
-            res.status(200).json(chats)
+            chatsPublicos.forEach(chat => {
+                chatsUnicos.set(chat.id.toString(), chat);
+            });
+
+            chatsUsuario.forEach(chat => {
+                chatsUnicos.set(chat.id.toString(), chat);
+            });
+
+            const chats = Array.from(chatsUnicos.values()).map(c => chatADTO(c));
+
+            res.status(200).json(chats);
         } catch (error) {
             next(error);
         }
     }
+
 
     async create(req, res, next) {
         try{
