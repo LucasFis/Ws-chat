@@ -51,6 +51,7 @@ const configureRoutes = (app) =>{
 
     app.post("/login", usuarioController.findByCredentials.bind(usuarioController))
     app.post("/register", usuarioController.register.bind(usuarioController))
+    app.get("/users", usuarioController.findAll.bind(usuarioController))
 
     app.get("/chats", chatController.findAll.bind(chatController))
     app.post("/chats", chatController.create.bind(chatController))

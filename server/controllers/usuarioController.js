@@ -5,6 +5,17 @@ export class UsuarioController {
         this.usuarioRepo = usuarioRepo;
     }
 
+    async findAll(req, res, next) {
+        try{
+            const results = await this.usuarioRepo.findAll();
+
+            res.status(200).json(results.map(u => usuarioADTO(u)));
+
+        } catch(error) {
+            next(error);
+        }
+    }
+
     async register(req, res, next) {
         try {
             const usuario = req.body;

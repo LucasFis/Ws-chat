@@ -11,6 +11,12 @@ export class UsuarioRepositorio {
         this.model = usuarioModel;
     }
 
+    async findAll() {
+        const results = await this.model.find()
+
+        return results.map(u => usuarioSimpleDeDB(u));
+    }
+
     async create(user) {
         const results = await this.model.find({nombre: user.nombre})
 

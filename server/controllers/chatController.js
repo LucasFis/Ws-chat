@@ -31,7 +31,6 @@ export class ChatController {
         }
     }
 
-
     async create(req, res, next) {
         try{
             const usuario = await this.usuarioRepo.findById(req.session.user)
